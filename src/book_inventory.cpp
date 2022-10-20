@@ -60,3 +60,94 @@ Books read_database(std::string filepath){
     delete[] arr;
     return books;
 }
+
+// defining a function: read_database
+std::string search(Books inventory, std::string title){
+    std::string isbn{"none"};
+
+    int comp{};
+    for (size_t i{}; i < inventory.size(); i++) {
+        comp = title.compare(inventory[i].title);
+        if (comp == 0)
+            isbn = inventory[i].isbn;
+    }
+    return isbn;
+
+}
+
+// defining a function: order
+bool order(Books& inventory, Books& shopinglist, std::string isbn){
+    int comp{};
+    size_t i{0};
+    for (; i < inventory.size(); i++) {
+        comp = isbn.compare(inventory[i].isbn);
+        if (comp == 0) {
+            inventory[i].count--;
+            shopinglist.push_back(inventory[i]);
+            break;
+        }
+    }
+    if (i == inventory.size())
+        return false;
+    return true;
+}
+
+// defining a function: get_receipt
+double get_receipt(Books shopinglist){
+    double total{0};
+    std::cout << std::fixed;
+    std::cout << "*****************************************************************" << std::endl;
+    std::cout << "|    Title                  |    ISBN         |    Price        |" << std::endl;
+    std::cout << "|---------------------------------------------------------------|" << std::endl;
+    
+    for (size_t i{}; i < shopinglist.size(); i++) {
+        // summing up the prices
+        total += shopinglist[i].cost;
+
+        // printing title
+        std::cout << "|    ";
+        if (shopinglist[i].title.length() > 18){
+            std::cout << shopinglist[i].title.substr(0, 16) << "...";
+        }
+        else{
+            std::cout << shopinglist[i].title;
+            for (size_t j{}; j < 19-shopinglist[i].title.length(); j++)
+                std::cout << " ";
+        }
+        std::cout << "    |    ";
+        
+        // printing isbn
+        if (shopinglist[i].isbn.length() > 10){
+            std::cout << shopinglist[i].isbn.substr(0, 8) << "...";
+        }
+        else{
+
+            std::cout << shopinglist[i].isbn;
+            for (size_t j{}; j < 13-shopinglist[i].isbn.length(); j++){
+                std::cout << " ";
+            }
+        }
+        std::cout << "|    ";
+
+        // printing cost
+        if (shopinglist[i].cost < 10)
+            std::cout << std::setprecision(6) << shopinglist[i].cost;
+        else 
+            std::cout << std::setprecision(5) << shopinglist[i].cost;
+        std::cout << "$    |" << std::endl;
+    }
+    std::cout << "|---------------------------------------------------------------|" << std::endl;
+    std::cout << "|                           |    Total Price  |    ";
+
+    if (total >= 10 && total <= 100)
+        std::cout << std::setprecision(5) << total << "$    |" << std::endl;
+    else if (total >= 100 && total <= 1000)
+        std::cout << std::setprecision(4) << total << "$    |" << std::endl;
+    else if (total >= 1000)
+        std::cout << std::setprecision(3) << total << "$    |" << std::endl;
+    else 
+        std::cout << std::setprecision(6) << total << "$    |" << std::endl;
+    std::cout << "*****************************************************************" << std::endl;
+
+    return total;
+}

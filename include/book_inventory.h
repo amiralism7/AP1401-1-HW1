@@ -1,4 +1,5 @@
 #include<iostream>
+#include<iomanip>
 #include <vector>
 
 void testfunc();
@@ -20,3 +21,13 @@ using Books = std::vector<Book>;
 
 // declaring a function: read_database
 Books read_database(std::string filepath);
+
+
+// declaring a function: search
+std::string search(Books inventory, std::string title);
+
+// declaring a function: order
+bool order(Books& inventory, Books& shopinglist, std::string isbn);
+
+// declaring a function: get_receipt
+double get_receipt(Books shopinglist);
