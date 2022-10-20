@@ -4,12 +4,17 @@
 #include "book_inventory.h"
 #include "regression.h"
 
+
 int main(int argc, char **argv)
 {
-    if (false) // make false to run unit-tests
+    if (true) // make false to run unit-tests
     {
         // debug section
-        
+        std::cout<< "main.cpp is running..." << std::endl;
+
+        testfunc();
+        Books a{};
+        a = read_database("../resources/inventory.txt");
     }
     else
     {
