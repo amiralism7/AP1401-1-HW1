@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <gtest/gtest.h>
 #include "book_inventory.h"
@@ -12,28 +11,35 @@ int main(int argc, char **argv)
         // debug section
         std::cout<< "main.cpp is running..." << std::endl;
 
-        testfunc();
         // testing read_database
-        Books inventory{read_database("../resources/inventory.txt")};
+        Books inventory{book::read_database("../resources/inventory.txt")};
         
         std::cout << inventory[58].title << std::endl;
         // testing search
-        std::cout << search(inventory, "Harry Potter and the Prisoner of Azkaban") << std::endl; //043965548X
+        std::cout << book::search(inventory, "Harry Potter and the Prisoner of Azkaban") << std::endl; //043965548X
         // testing order
         Books shopinglist{};
-        std::cout << order(inventory, shopinglist, inventory[58].isbn) << std::endl;
+        std::cout << book::order(inventory, shopinglist, inventory[58].isbn) << std::endl;
         std::cout << inventory[58].title << std::endl;
         std::cout << shopinglist[0].title << std::endl;
         // testing get_receipt
-        order(inventory, shopinglist, inventory[0].isbn);
-        order(inventory, shopinglist, inventory[55].isbn);
-        order(inventory, shopinglist, inventory[46].isbn);
-        order(inventory, shopinglist, inventory[33].isbn);
-        order(inventory, shopinglist, inventory[20].isbn);
-        order(inventory, shopinglist, inventory[17].isbn);
-        std::cout << get_receipt(shopinglist) << std::endl;
+        book::order(inventory, shopinglist, inventory[0].isbn);
+        book::order(inventory, shopinglist, inventory[55].isbn);
+        book::order(inventory, shopinglist, inventory[46].isbn);
+        book::order(inventory, shopinglist, inventory[33].isbn);
+        book::order(inventory, shopinglist, inventory[20].isbn);
+        book::order(inventory, shopinglist, inventory[17].isbn);
+        std::cout << book::get_receipt(shopinglist) << std::endl;
         
+        std::cout << "*****************************************************************" << std::endl;
         
+        // testing read_database
+        Data data{regression::read_database("../resources/fish.txt")};
+        std::cout << data.size() << std::endl;
+        std::cout << data[0].size() << std::endl;
+        std::cout << data[99][0] << " " << data[99][1] << " "  << data[99][2] << " "  << data[99][3] << " "  << data[99][4] << std::endl;
+
+        std::vector<double> theta = regression::linear_regression(data, {0, 0, 0, 0}, 0.0000005);
     }
     else
     {

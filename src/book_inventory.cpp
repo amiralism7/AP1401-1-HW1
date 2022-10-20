@@ -1,14 +1,7 @@
 #include "book_inventory.h"
-#include "fstream"
-
-//delete this after the test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-void testfunc(){
-    std::cout << "testfunc is running..." << std::endl;
-}
-
 
 // defining a function: read_database
-Books read_database(std::string filepath){
+Books book::read_database(std::string filepath){
     // try to open the file
     std::ifstream ifile{filepath};
     if (ifile.fail()){
@@ -62,7 +55,7 @@ Books read_database(std::string filepath){
 }
 
 // defining a function: read_database
-std::string search(Books inventory, std::string title){
+std::string book::search(Books inventory, std::string title){
     std::string isbn{"none"};
 
     int comp{};
@@ -76,7 +69,7 @@ std::string search(Books inventory, std::string title){
 }
 
 // defining a function: order
-bool order(Books& inventory, Books& shopinglist, std::string isbn){
+bool book::order(Books& inventory, Books& shopinglist, std::string isbn){
     int comp{};
     size_t i{0};
     for (; i < inventory.size(); i++) {
@@ -93,7 +86,7 @@ bool order(Books& inventory, Books& shopinglist, std::string isbn){
 }
 
 // defining a function: get_receipt
-double get_receipt(Books shopinglist){
+double book::get_receipt(Books shopinglist){
     double total{0};
     std::cout << std::fixed;
     std::cout << "*****************************************************************" << std::endl;
